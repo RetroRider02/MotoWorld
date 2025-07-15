@@ -1,0 +1,349 @@
+﻿@model MotoWorld3.ViewModels.Advertisings.EditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row align-items-center">
+    <div class="col-12">
+        <form asp-controller="Advertisings" asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Advertising.Id" />
+            <div class="row p-5 p-5 pt-5 pb-2">
+                <h4 class="p-3 text-warning">Személyes adatok</h4>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" value="@ViewBag.Email" disabled class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input asp-for="PhoneNumber" value="@ViewBag.Tel" class="form-control" placeholder="pl: +36301112233" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-5 pt-0 pb-2">
+                <h4 class="p-3 text-warning">Általános adatok</h4>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="MotorcycleType.Manufacturer" class="control-label"></label>
+                        <select asp-for="MotorcycleType.Manufacturer" id="gyartoSelect" onchange="changeModelValue()" class="form-select">
+                            @foreach (var item in ViewBag.Manufacturers)
+                            {
+                                if (item == Model.MotorcycleType.Manufacturer)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="MotorcycleType.Manufacturer" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="MotorcycleType.Model" class="control-label"></label>
+                        <select asp-for="MotorcycleType.Model" id="tipusSelect" class="form-select">
+                            <option value="@Model.MotorcycleType.Model" selected>@Model.MotorcycleType.Model</option>
+                        </select>
+                        <span asp-validation-for="MotorcycleType.Model" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Category" class="control-label"></label>
+                        <select asp-for="Motorcycle.Category" class="form-select">
+                            @foreach (var item in ViewBag.Category)
+                            {
+                                if (item == Model.Motorcycle.Category)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.Category" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Condition" class="control-label"></label>
+                        <select asp-for="Motorcycle.Condition" class="form-select">
+                            @foreach (var item in ViewBag.Condition)
+                            {
+                                if (item == Model.Motorcycle.Condition)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.Condition" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Mileage" class="control-label"></label>
+                        <input asp-for="Motorcycle.Mileage" placeholder="km" class="form-control" />
+                        <span asp-validation-for="Motorcycle.Mileage" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Color" class="control-label"></label>
+                        <input asp-for="Motorcycle.Color" type="color" class="form-control" />
+                        <span asp-validation-for="Motorcycle.Color" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-5 pb-2 pt-0">
+                <h4 class="p-3 text-warning">Specifikus adatok</h4>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.YearOfManufacture" class="control-label"></label>
+                        <input asp-for="Motorcycle.YearOfManufacture" placeholder="pl: 1994" class="form-control" />
+                        <span asp-validation-for="Motorcycle.YearOfManufacture" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Weight" class="control-label"></label>
+                        <input asp-for="Motorcycle.Weight" placeholder="kg" class="form-control" />
+                        <span asp-validation-for="Motorcycle.Weight" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Fuel" class="control-label"></label>
+                        <input asp-for="Motorcycle.Fuel" disabled class="form-control" />
+                        <span asp-validation-for="Motorcycle.Fuel" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Power" class="control-label"></label>
+                        <input asp-for="Motorcycle.Power" placeholder="LE" class="form-control" />
+                        <span asp-validation-for="Motorcycle.Power" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.WorkSchedule" class="control-label"></label>
+                        <select asp-for="Motorcycle.WorkSchedule" class="form-select">
+                            @foreach (var item in ViewBag.WorkSchedule)
+                            {
+                                if (item == Model.Motorcycle.WorkSchedule)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.WorkSchedule" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.NumberOfCylinders" class="control-label"></label>
+                        <select asp-for="Motorcycle.NumberOfCylinders" class="form-select">
+                            @foreach (var item in ViewBag.NumberOfCylinders)
+                            {
+                                if (item == Model.Motorcycle.NumberOfCylinders)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.NumberOfCylinders" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.CylinderCapacity" class="control-label"></label>
+                        <input asp-for="Motorcycle.CylinderCapacity" class="form-control" />
+                        <span asp-validation-for="Motorcycle.CylinderCapacity" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.ValvesPerCylinders" class="control-label"></label>
+                        <select asp-for="Motorcycle.ValvesPerCylinders" class="form-select">
+                            @foreach (var item in ViewBag.ValvesPerCylinders)
+                            {
+                                if (item == Model.Motorcycle.ValvesPerCylinders)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.ValvesPerCylinders" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.CylinderArrangement" class="control-label"></label>
+                        <select asp-for="Motorcycle.CylinderArrangement" class="form-select">
+                            @foreach (var item in ViewBag.CylinderArrangement)
+                            {
+                                if (item == Model.Motorcycle.CylinderArrangement)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.CylinderArrangement" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Mixture" class="control-label"></label>
+                        <select asp-for="Motorcycle.Mixture" class="form-select">
+                            @foreach (var item in ViewBag.Mixture)
+                            {
+                                if (item == Model.Motorcycle.Mixture)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.Mixture" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Cooling" class="control-label"></label>
+                        <select asp-for="Motorcycle.Cooling" class="form-select">
+                            @foreach (var item in ViewBag.Cooling)
+                            {
+                                if (item == Model.Motorcycle.Cooling)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.Cooling" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.DriveType" class="control-label"></label>
+                        <select asp-for="Motorcycle.DriveType" class="form-select">
+                            @foreach (var item in ViewBag.DriveType)
+                            {
+                                if (item == Model.Motorcycle.DriveType)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.DriveType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label asp-for="Motorcycle.Transmission" class="control-label"></label>
+                        <select asp-for="Motorcycle.Transmission" class="form-select">
+                            @foreach (var item in ViewBag.Transmission)
+                            {
+                                if (item == Model.Motorcycle.Transmission)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Motorcycle.Transmission" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6 form-group p-3">
+                        <label for="images" class="control-label">További képek feltöltése</label>
+                        <input class="form-control d-inline" accept="image/*" type="file" id="images" name="images" multiple />
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var picture in Model.Pictures)
+                    {
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-3">
+                            <img class="img-thumbnail" style="width: 100%; height: auto; max-height: 300px" src="data:@picture.ContentType;base64,@Convert.ToBase64String(picture.Data)" alt="@picture.FileName" />
+                            <a class="btn btn-sm btn-danger mt-2 w-100" asp-action="DeletePicture" asp-route-id="@picture.Id">Törlés</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row p-5 pb-2 pt-0">
+                <h4 class="p-3 text-warning">Hirdetés adatai</h4>
+                <div class="row mb-5">
+                    <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col form-group p-3">
+                            <label asp-for="Advertising.Price" class="control-label"></label>
+                            <input asp-for="Advertising.Price" class="form-control" />
+                            <span asp-validation-for="Advertising.Price" class="text-danger"></span>
+                        </div>
+                        <div class="col form-group p-3">
+                            <label asp-for="Place.ZipCode" class="control-label"></label>
+                            <input asp-for="Place.ZipCode" class="form-control" placeholder="6720" />
+                            <span asp-validation-for="Place.ZipCode" class="text-danger"></span>
+                        </div>
+                        <div class="col form-group p-3">
+                            <label asp-for="Place.CityName" class="control-label"></label>
+                            <input asp-for="Place.CityName" class="form-control" placeholder="Szeged" />
+                            <span asp-validation-for="Place.CityName" class="text-danger"></span>
+                        </div>
+                        <div class="col form-group p-3">
+                            <label asp-for="Place.Street" class="control-label"></label>
+                            <input asp-for="Place.Street" class="form-control" placeholder="Példa utca" />
+                            <span asp-validation-for="Place.Street" class="text-danger"></span>
+                        </div>
+                        <div class="col form-group p-3">
+                            <label asp-for="Place.HouseNumber" class="control-label"></label>
+                            <input asp-for="Place.HouseNumber" class="form-control" placeholder="18/A" />
+                            <span asp-validation-for="Place.HouseNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group p-3">
+                            <label asp-for="Advertising.Description" class="control-label"></label>
+                            <textarea asp-for="Advertising.Description" rows="17" class="form-control"></textarea>
+                            <span asp-validation-for="Advertising.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group p-3">
+                            <input class="btn btn-sm btn-success float-end" type="submit" value="Hirdetés módosítása" />
+                            <a class="btn btn-sm btn-secondary float-end" style="margin-right: 10px;" asp-area="Identity" asp-page="/Account/Manage/Index">Mégse</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
