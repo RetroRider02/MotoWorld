@@ -21,8 +21,8 @@
                     </h2>
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body">
-                            <label class="col-form-label-sm" for="brand">Márka</label>
-                            <select class="form-select form-select-sm" name="brand" id="brand">
+                            <label asp-for="Manufacturer" class="col-form-label-sm">Gyártó</label>
+                            <select asp-for="Manufacturer" name="brand" class="form-select form-select-sm" id="brand">
                                 <option value="">Mindegy</option>
                                 @foreach (var item in ViewBag.Manufacturers)
                                 {
@@ -33,21 +33,6 @@
                                     else
                                     {
                                         <option value="@item">@item</option>
-                                    }
-                                }
-                            </select>
-                            <label class="col-form-label-sm pt-3" for="model">Modell</label>
-                            <select class="form-select form-select-sm mb-3" disabled name="model" id="model">
-                                <option value="">Mindegy</option>
-                                @foreach (var item in Model.PaginatedList)
-                                {
-                                    if (item.Motorcycle.MotorcycleType.Model == ViewBag.Model)
-                                    {
-                                        <option value="@ViewBag.Model" selected>@ViewBag.Model</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Motorcycle.MotorcycleType.Model">@item.Motorcycle.MotorcycleType.Model</option>
                                     }
                                 }
                             </select>
@@ -62,19 +47,19 @@
                     </h2>
                     <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                         <div class="accordion-body">
-                            <label class="col-form-label-sm" for="min_price">Vételár</label>
+                            <span class="col-form-label-sm">Vételár</span>
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="min_price" id="min_price" placeholder="min" value="@ViewBag.MinPrice">
+                                    <input asp-for="MinPrice" name="min_price" value="@ViewBag.MinPrice" class="form-control form-control-sm mb-3" oninput="validateFields()" id="min_price" placeholder="min">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="max_price" id="max_price" placeholder="max" value="@ViewBag.MaxPrice">
+                                    <input asp-for="MaxPrice" name="max_price" value="@ViewBag.MaxPrice" class="form-control form-control-sm mb-3" oninput="validateFields()" id="max_price" placeholder="max">
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-form-label-sm" for="min_year">Évjárat</label>
+                                <span class="col-form-label-sm">Évjárat</span>
                                 <div class="col">
-                                    <select class="form-select form-select-sm mb-3" oninput="validateFields()" name="min_year" id="min_year">
+                                    <select asp-for="MinYearOfManufacture" name="min_year" class="form-select form-select-sm mb-3" oninput="validateFields()" id="min_year">
                                         <option value="">min</option>
                                         @for (int i = 1900; i <= DateTime.Now.Year; i++)
                                         {
@@ -90,7 +75,7 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <select class="form-select form-select-sm mb-3" oninput="validateFields()" name="max_year" id="max_year">
+                                    <select asp-for="MaxYearOfManufacture" name="max_year" class="form-select form-select-sm mb-3" oninput="validateFields()" id="max_year">
                                         <option value="">max</option>
                                         @for (int i = 1900; i <= DateTime.Now.Year; i++)
                                         {
@@ -107,12 +92,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-form-label-sm" for="min_km">Futásteljesítmény</label>
+                                <span class="col-form-label-sm">Futásteljesítmény</span>
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="min_km" id="min_km" placeholder="min" value="@ViewBag.MinMileage">
+                                    <input asp-for="MinMileage" name="min_km" value="@ViewBag.MinMileage" class="form-control form-control-sm mb-3" oninput="validateFields()" id="min_km" placeholder="min">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="max_km" id="max_km" placeholder="max" value="@ViewBag.MaxMileage">
+                                    <input asp-for="MaxMileage" name="max_km" value="@ViewBag.MaxMileage" class="form-control form-control-sm mb-3" oninput="validateFields()" id="max_km" placeholder="max">
                                 </div>
                             </div>
                         </div>
@@ -126,18 +111,17 @@
                     </h2>
                     <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                         <div class="accordion-body">
-                            <label class="col-form-label-sm" for="min_year">Üzemanyag</label>
-                            <select class="form-select form-select-sm mb-3" name="min_year" id="min_year" disabled>
+                            <label asp-for="Fuel" class="col-form-label-sm">Üzemanyag</label>
+                            <select asp-for="Fuel" name="fuel" class="form-select form-select-sm mb-3" id="fuel">
                                 <option value="Benzin">Benzin</option>
-                                <option value="Elektromos">Elektromos</option>
                             </select>
-                            <label class="col-form-label-sm" for="min_price">Hengerűrtartalom</label>
+                            <span class="col-form-label-sm">Hengerűrtartalom</span>
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="min_cylinder_capacity" id="min_cylinder_capacity" placeholder="min" value="@ViewBag.MinCylinderCapacity">
+                                    <input asp-for="MinCylinderCapacity" name="min_cylinder_capacity" value="@ViewBag.MinCylinderCapacity" class="form-control form-control-sm mb-3" oninput="validateFields()" id="min_cylinder_capacity" placeholder="min">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control form-control-sm mb-3" oninput="validateFields()" name="max_cylinder_capacity" id="max_cylinder_capacity" placeholder="max" value="@ViewBag.MaxCylinderCapacity">
+                                    <input asp-for="MaxCylinderCapacity" name="max_cylinder_capacity" value="@ViewBag.MaxCylinderCapacity" class="form-control form-control-sm mb-3" oninput="validateFields()" id="max_cylinder_capacity" placeholder="max">
                                 </div>
                             </div>
                         </div>
@@ -155,10 +139,10 @@
         <div class="col-md-12 col-lg-12 col-xl-9 mt-5">
             <div class="fw-bold text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                    </svg>
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
                 <p class="mt-5">Sajnáljuk, jelenleg nincs a keresésnek megfelelő elem!</p>
-                </div>            
+            </div>            
         </div>        
     }
 
@@ -331,3 +315,9 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

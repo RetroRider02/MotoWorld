@@ -66,17 +66,17 @@ function validateFields() {
         const minCylinderCapacity = parseInt(document.getElementById("min_cylinder_capacity").value);
         const maxCylinderCapacity = parseInt(document.getElementById("max_cylinder_capacity").value);
 
-        if ((!isNaN(minKm) && !isNaN(maxKm) && minKm > maxKm || (minKm < 0 || maxKm < 0) || maxKm > 299000) ||
-            (!isNaN(minYear) && !isNaN(maxYear) && minYear > maxYear || (minYear < 1900 || maxYear < 1900) || maxYear > 2025) ||
-            (!isNaN(minPrice) && !isNaN(maxPrice) && minPrice > maxPrice || (minPrice < 0 || maxPrice < 0) || maxPrice > 9999999) ||
-            (!isNaN(minCylinderCapacity) && !isNaN(maxCylinderCapacity) && minCylinderCapacity > maxCylinderCapacity || (minCylinderCapacity < 38 || maxCylinderCapacity < 0) || maxCylinderCapacity > 1999)) {
+        if ((!isNaN(minKm) && !isNaN(maxKm) && minKm > maxKm) ||
+            (!isNaN(minYear) && !isNaN(maxYear) && minYear > maxYear) ||
+            (!isNaN(minPrice) && !isNaN(maxPrice) && minPrice > maxPrice) ||
+            (!isNaN(minCylinderCapacity) && !isNaN(maxCylinderCapacity) && minCylinderCapacity > maxCylinderCapacity)) {
             btn.disabled = true;
         } else {
             btn.disabled = false;
         }
     } else {
-        if (!isNaN(minKm) && !isNaN(maxKm) && minKm > maxKm || (minKm < 0 || maxKm < 0) || maxKm > 299000 ||
-            !isNaN(minYear) && !isNaN(maxYear) && minYear > maxYear || (minYear < 0 || maxYear < 0)) {
+        if ((!isNaN(minKm) && !isNaN(maxKm) && minKm > maxKm) ||
+            (!isNaN(minYear) && !isNaN(maxYear) && minYear > maxYear)) {
             btn.disabled = true;
         } else {
             btn.disabled = false;
