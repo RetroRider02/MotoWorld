@@ -7,15 +7,14 @@
 
 <div class="row align-items-center">
     <div class="col-12">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-controller="Advertisings" asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <div class="row p-5 pt-5 pb-2">
                 <h4 class="p-3 text-warning">Személyes adatok</h4>
                 <div class="row">
                     <div class="col-12 col-md-6 form-group p-3">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" value="@ViewBag.Email" disabled class="form-control" />
+                        <input asp-for="Email" value="@ViewBag.Email" readonly class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-12 col-md-6 form-group p-3">

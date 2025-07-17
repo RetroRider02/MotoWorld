@@ -164,7 +164,7 @@ namespace MotoWorld3.Controllers
         [ValidateAntiForgeryToken, Authorize]
         public async Task<IActionResult> Create(CreateViewModel model, List<IFormFile> images)
         {
-            var DB_User = await _userManager.FindByIdAsync(model.Advertising.IdentityUserID);
+            var DB_User = await _userManager.FindByEmailAsync(model.Email);
             var DB_MotorcycleType = _context.MotorcycleTypes.FirstOrDefault(x => x.Manufacturer == model.MotorcycleType.Manufacturer && x.Model == model.MotorcycleType.Model);
 
             if (DB_User == null || DB_MotorcycleType == null)
@@ -252,7 +252,7 @@ namespace MotoWorld3.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return RedirectToAction("Index", "Home");
+                return Redirect("~/Identity/Account/Manage");
             }
             catch (Exception ex)
             {
@@ -310,7 +310,8 @@ namespace MotoWorld3.Controllers
                 _context.Advertisings.Update(motorcycleAdvertising.Advertising);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+
+                return Redirect("~/Identity/Account/Manage");
             }
             catch (Exception ex)
             {
@@ -489,7 +490,7 @@ namespace MotoWorld3.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return RedirectToAction("Index", "Home");
+                return Redirect("~/Identity/Account/Manage");
             }
             catch (Exception ex)
             {
@@ -532,7 +533,7 @@ namespace MotoWorld3.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return RedirectToAction("Index", "Home");
+                return Redirect("~/Identity/Account/Manage");
             }
             catch (Exception ex)
             {
