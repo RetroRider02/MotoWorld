@@ -84,6 +84,6 @@ namespace MotoWorld3.Models
         [ForeignKey("MotorcycleTypeID")]
         public MotorcycleType MotorcycleType { get; set; }
 
-        public ICollection<MotorcycleAdvertising>? MotorcycleAdvertisings { get; set; }
+        public ICollection<MotorcycleAdvertising> MotorcycleAdvertisings { get; set; }
     }
 }

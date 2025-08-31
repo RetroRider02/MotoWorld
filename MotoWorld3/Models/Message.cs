@@ -13,11 +13,13 @@ namespace MotoWorld3.Models
         [Required]
         public int AdvertisingID { get; set; }
 
-        [Required]
-        public string IdentityUserID { get; set; }
+        [Required, MaxLength(90)]
+        public string RoomID { get; set; }
 
-        [Required, MaxLength(1024)]
-        [DisplayName("Tartalom")]
+        [Required]
+        public string SenderID { get; set; }
+
+        [Required, MaxLength(1024), DisplayName("Tartalom")]
         public string Content { get; set; }
 
         [Required]
@@ -26,7 +28,7 @@ namespace MotoWorld3.Models
         [ForeignKey("AdvertisingID")]
         public Advertising Advertising { get; set; }
 
-        [ForeignKey("IdentityUserID")]
-        public IdentityUser IdentityUser { get; set; }
+        [ForeignKey("SenderID")]
+        public IdentityUser SenderUser { get; set; }
     }
 }

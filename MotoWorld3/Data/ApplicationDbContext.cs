@@ -35,14 +35,14 @@ public class ApplicationDbContext : IdentityDbContext
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Advertising)
-            .WithMany()
+            .WithMany(a => a.Messages)
             .HasForeignKey(m => m.AdvertisingID)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Message>()
-            .HasOne(m => m.IdentityUser)
+            .HasOne(m => m.SenderUser)
             .WithMany()
-            .HasForeignKey(m => m.IdentityUserID)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(m => m.SenderID)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

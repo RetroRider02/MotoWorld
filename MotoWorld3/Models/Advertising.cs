@@ -39,7 +39,9 @@ namespace MotoWorld3.Models
         [ForeignKey("PlaceID")]
         public Place Place { get; set; }
 
-        public ICollection<MotorcycleAdvertising>? MotorcycleAdvertisings { get; set; }
+        public ICollection<MotorcycleAdvertising> MotorcycleAdvertisings { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
 
         public Advertising(){}
     }
