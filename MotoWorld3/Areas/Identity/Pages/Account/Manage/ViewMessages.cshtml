@@ -1,0 +1,58 @@
+﻿@page
+@model MotoWorld3.Areas.Identity.Pages.Account.Manage.ViewMessagesModel
+@{
+    ViewData["Title"] = "Üzenetek";
+    ViewData["ActivePage"] = ManageNavPages.ChatRoomListings;
+}
+
+<input type="hidden" id="senderEmail" value="@Model.SenderEmail" />
+<input type="hidden" id="sender" value="@Model.SenderID" />
+<input type="hidden" id="room" value="@Model.RoomID" />
+<input type="hidden" id="advertising" value="@Model.AdvertisingID" />
+
+<h5 class="p-3 bg-secondary text-light fw-bold">
+    <a class="text-warning text-decoration-none" asp-controller="Advertisings" asp-action="Details" asp-route-id="@Model.AdvertisingID">@Model.MotorcycleAdvertising?.Motorcycle.MotorcycleType.Manufacturer @Model.MotorcycleAdvertising?.Motorcycle.MotorcycleType.Model</a> - @Model.MotorcycleAdvertising?.Advertising.IdentityUser.Email
+</h5>
+
+<div id="chat-container">
+    @if (Model.Messages != null && Model.Messages.Any())
+    {
+        foreach (var message in Model.Messages)
+        {
+            if (message.SenderUser.Id == Model.SenderID)
+            {
+                <div class="message sent">
+                    <div class="sender text-light">
+                        @message.SenderUser.Email
+                    </div>
+                    <div class="bubble">
+                        @message.Content
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="message received">
+                    <div class="sender text-warning">
+                        @message.SenderUser.Email
+                    </div>
+                    <div class="bubble">
+                        @message.Content
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<div class="row p-3">
+    <div class="col">
+        <input type="text" class="form-control" id="messageInput" placeholder="Üzenet">
+    </div>
+    <div class="col-2">
+        <input type="button" class="btn btn-success w-100" id="sendButton" value="Küldés" />
+    </div>
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
