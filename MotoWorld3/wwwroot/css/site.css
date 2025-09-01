@@ -52,3 +52,54 @@ body {
     background-size: cover;
     height: 20rem;
 }
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: auto;
+}
+
+.message {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sent {
+    align-items: flex-end;
+}
+
+.received {
+    align-items: flex-start;
+}
+
+.sender {
+    font-size: 0.8em;
+    color: #555;
+    margin-bottom: 2px;
+}
+
+.bubble {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 60%;
+    word-wrap: break-word;
+}
+
+.sent .bubble {
+    background-color: #0078D7;
+    color: white;
+}
+
+.received .bubble {
+    background-color: #e5e5ea;
+    color: black;
+}
+
+.center-svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+}
