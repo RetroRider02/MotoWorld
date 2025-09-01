@@ -109,10 +109,7 @@ namespace MotoWorld3.Controllers
                 return NotFound();
             }
 
-            var images = await _context.Pictures
-                .Include(x => x.Advertising)
-                .Where(x => x.AdvertisingID == motorcycleAdvertising.AdvertisingID)
-                .ToListAsync();
+            var images = await _context.Pictures.Where(x => x.AdvertisingID == motorcycleAdvertising.AdvertisingID).ToListAsync();
 
             return View(new DetailsViewModel(motorcycleAdvertising, images));
         }
@@ -136,7 +133,7 @@ namespace MotoWorld3.Controllers
                 "Sportmotor", "Sport-Túra", "Túra", "Vintage"
             };
 
-            var brandsAndModels = _context.MotorcycleTypes.ToList();
+            var brandsAndModels = await _context.MotorcycleTypes.ToListAsync();
 
             ViewBag.Manufacturers = brandsAndModels.Select(x => x.Manufacturer).Distinct().ToList();
             ViewBag.Models = brandsAndModels.Select(x => x.Model).ToList();
@@ -151,7 +148,13 @@ namespace MotoWorld3.Controllers
             ViewBag.DriveType = new List<string> { "Szíj", "Lánc", "Kardán" };
             ViewBag.Transmission = new List<string> { "Manuális", "Automata" };
 
-            return View();
+            var address = await _context.Advertisings.Where(x => x.IdentityUserID == identityUser.Id).Select(x => x.Place).ToListAsync();
+
+            if (address.Any())
+            {
+                return View(new CreateViewModel() { Place = address.First() });
+            }
+            return View(new CreateViewModel() { Place = new Place() });
         }
 
         [HttpGet]

@@ -215,22 +215,22 @@
                         </div>
                         <div class="col form-group p-3">
                             <label asp-for="Place.ZipCode" class="control-label"></label>
-                            <input asp-for="Place.ZipCode" class="form-control" placeholder="6720" />
+                            <input asp-for="Place.ZipCode" value="@Model.Place?.ZipCode" class="form-control" placeholder="6720" />
                             <span asp-validation-for="Place.ZipCode" class="text-danger"></span>
                         </div>
                         <div class="col form-group p-3">
                             <label asp-for="Place.CityName" class="control-label"></label>
-                            <input asp-for="Place.CityName" class="form-control" placeholder="Szeged" />
+                            <input asp-for="Place.CityName" value="@Model.Place?.CityName" class="form-control" placeholder="Szeged" />
                             <span asp-validation-for="Place.CityName" class="text-danger"></span>
                         </div>
                         <div class="col form-group p-3">
                             <label asp-for="Place.Street" class="control-label"></label>
-                            <input asp-for="Place.Street" class="form-control" placeholder="Példa utca" />
+                            <input asp-for="Place.Street" value="@Model.Place?.Street" class="form-control" placeholder="Példa utca" />
                             <span asp-validation-for="Place.Street" class="text-danger"></span>
                         </div>
                         <div class="col form-group p-3">
                             <label asp-for="Place.HouseNumber" class="control-label"></label>
-                            <input asp-for="Place.HouseNumber" class="form-control" placeholder="18/A" />
+                            <input asp-for="Place.HouseNumber" value="@Model.Place?.HouseNumber" class="form-control" placeholder="18/A" />
                             <span asp-validation-for="Place.HouseNumber" class="text-danger"></span>
                         </div>
                     </div>
