@@ -1,0 +1,77 @@
+﻿@page
+@model MotoWorld3.Areas.Identity.Pages.Account.Manage.ChatRoomListingsModel
+@{
+    ViewData["Title"] = "Üzenetek";
+    ViewData["ActivePage"] = ManageNavPages.ChatRoomListings;
+}
+
+<h5 class="p-3 bg-secondary text-light fw-bold">@ViewData["Title"]</h5>
+
+@if (Model.Rooms.Any())
+{
+    <table class="table d-none d-lg-table d-xl-table">
+        <thead>
+            <tr>
+                <th scope="col">Hirdetés</th>
+                <th scope="col">Hirdető</th>
+                <th scope="col">Érdeklődő</th>
+                <th scope="col">Chat létrehozva</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms.OrderBy(x => x.Created).DistinctBy(x => x.RoomID).OrderBy(x => x.RoomID))
+            {
+                <tr>
+                    <td><a asp-controller="Advertisings" asp-action="Details" asp-route-id="@room.AdvertisingID">#@room.AdvertisingID</a></td>
+                    @if (room.Advertising.IdentityUser.Email == User?.Identity?.Name)
+                    {
+                        <td>@room.Advertising.IdentityUser.Email</td>
+                        <td>@room.SenderUser.Email</td>
+                    }
+                    else
+                    {
+                        <td>@room.Advertising.IdentityUser.Email</td>
+                        <td>@User?.Identity?.Name</td>
+                    }
+                    <td>@room.Created</td>
+                    <td><a class="btn btn-sm btn-warning" asp-page="./ViewMessages" asp-route-id="@room.AdvertisingID" asp-route-room="@room.RoomID">Megtekint</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="table d-table d-lg-none d-xl-none">
+        <thead>
+            <tr>
+                <th scope="col">Hirdetés</th>
+                <th scope="col">Hirdető</th>
+                <th scope="col">Érdeklődő</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms.OrderBy(x => x.Created).DistinctBy(x => x.RoomID).OrderBy(x => x.RoomID))
+            {
+                <tr>
+                    <td><a asp-controller="Advertisings" asp-action="Details" asp-route-id="@room.AdvertisingID">#@room.AdvertisingID</a></td>
+                    @if (room.Advertising.IdentityUser.Email == User?.Identity?.Name)
+                    {
+                        <td>@room.Advertising.IdentityUser.Email</td>
+                        <td>@room.SenderUser.Email</td>
+                    }
+                    else
+                    {
+                        <td>@room.Advertising.IdentityUser.Email</td>
+                        <td>@User?.Identity?.Name</td>
+                    }
+                    <td><a class="btn btn-sm btn-warning" asp-page="./ViewMessages" asp-route-id="@room.AdvertisingID" asp-route-room="@room.RoomID">Megtekint</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nincsenek üzeneteid.</p>
+}
