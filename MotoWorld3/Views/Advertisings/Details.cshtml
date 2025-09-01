@@ -2,19 +2,33 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var advertiserId = Model.MotorcycleAdvertising.Advertising.IdentityUserID;
 }
 
 <div class="row justify-content-center pt-5">
     <div class="col-sm-12 col-md-12 col-lg-9">
-        <h4 class="p-3 w-100 text-light fw-bold">
-            @Html.DisplayFor(model => model.MotorcycleAdvertising.Motorcycle.MotorcycleType.Manufacturer) - @Html.DisplayFor(model => model.MotorcycleAdvertising.Motorcycle.MotorcycleType.Model)
-        </h4>
+        <div class="row">
+            <div class="col">
+                <h4 class="p-3 text-light fw-bold">
+                    @Html.DisplayFor(model => model.MotorcycleAdvertising.Motorcycle.MotorcycleType.Manufacturer) - @Html.DisplayFor(model => model.MotorcycleAdvertising.Motorcycle.MotorcycleType.Model)
+                </h4>
+            </div>
+            <div class="col-4 col-xl-3">
+                @if (currentUserId != advertiserId)
+                {
+                    <a class="mt-3 w-100 fw-bold btn btn-warning" asp-area="Identity" asp-page="/Account/Manage/ViewMessages" asp-route-id="@Model.MotorcycleAdvertising.AdvertisingID">Üzenet a hirdetőnek</a>
+                }
+            </div>
+        </div>
+        
         <div id="myCarousel" class="carousel slide bg-body-tertiary" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active bg-light" aria-current="true" aria-label="Slide 1"></button>
                 @for (var i = 1; i < Model.Pictures.Count(); i++)
                 {
-                    <button type="button" class="bg-light" data-bs-target="#myCarousel" data-bs-slide-to="@(i)" aria-label="Slide @(i)"></button>
+                    <button type="button" class="bg-light" data-bs-target="#myCarousel" data-bs-slide-to="@i" aria-label="Slide @i"></button>
                 }
             </div>
             <div class="carousel-inner rounded-3">
