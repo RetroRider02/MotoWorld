@@ -2,17 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MotoWorld3.Data;
-using MotoWorld3.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace MotoWorld3.Areas.Identity.Pages.Account.Manage
 {
@@ -65,47 +62,33 @@ namespace MotoWorld3.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        public List<MotorcycleAdvertising> Advertisings { get; set; }
+        public int FrozenAdvertisingsCount { get; set; }
 
-        public List<Picture> Pictures { get; set; }
+        public int AdvertisingsCount { get; set; }
+
+        public int ChatRoomCount { get; set; }
+
+        public string Address { get; set; }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
+            var userId = await _userManager.GetUserIdAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            var advertisings = await _dbContext.MotorcycleAdvertisings
-                .Include(x => x.Advertising)
-                .Include(x => x.Advertising.IdentityUser)
-                .Include(x => x.Advertising.Place)
-                .Include(x => x.Motorcycle)
-                .Include(x => x.Motorcycle.MotorcycleType)
-                .Where(x => x.Advertising.IdentityUser.UserName == userName)
-                .ToListAsync();
-
-            var images = await _dbContext.Pictures.ToListAsync();
-            var user_images = new List<Picture>();
-
-            foreach(var item in advertisings)
-            {
-                foreach (var image in images)
-                {
-                    if (image.AdvertisingID == item.AdvertisingID)
-                    {
-                        user_images.Add(image);
-                    }
-                }
-            }
-
             Username = userName;
-
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = (phoneNumber.IsNullOrEmpty()) ? "Nincs megadva" : phoneNumber
             };
 
-            Advertisings = advertisings;
-            Pictures = user_images;
+            var advertisings = await _dbContext.Advertisings.Include(x => x.IdentityUser).Include(x => x.Place).Where(x => x.IdentityUser.UserName == userName).ToListAsync();
+            var address = advertisings.Select(x => x.Place).ToList();
+
+            FrozenAdvertisingsCount = advertisings.Where(x => x.Frozen).Count();
+            AdvertisingsCount = advertisings.Where(x => !x.Frozen).Count();
+            ChatRoomCount = _dbContext.Messages.ToList().DistinctBy(x => x.RoomID).Where(x => x.RoomID.Contains(userId)).Count();
+            Address = (!address.Any()) ? "Nincs megadva" : address[0].ZipCode + " " + address[0].CityName + ", " + address[0].Street + " " + address[0].HouseNumber; 
         }
 
         public async Task<IActionResult> OnGetAsync()
